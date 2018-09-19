@@ -1,22 +1,10 @@
 import numpy as np
 import sys
+import time
 
 states = np.arange(12)
-
-         # a1 a2 a3 b1 b2 b3 c
-actions = [0, 1, 2, 3, 4, 5, 6]
-
-rewards = np.ones((len(states), len(actions)))*-1
-print(rewards.shape)
-rewards[2,6] = 0
-rewards[9,2] = 100    # goal state
-rewards[10,2] = 100    # goal state
-rewards[6,0] = -10    # punishment for big disk on small disk
-rewards[7,3] = -10
-rewards[8,5] = -10
-rewards[9,3] = -10
-rewards[10,4] = -10
-rewards[11,5] = -10
+         # a1 a2 a3 b1 b2 b3
+actions = [0, 1, 2, 3, 4, 5]
 
 
 # transitiontable has size SxAxS
@@ -32,7 +20,13 @@ transitionTable[1,0,11] = 0.1
 transitionTable[1,2,11] = 0.9
 transitionTable[1,2,7] = 0.1
 # S2
-transitionTable[2,6,2] = 1.0
+# when the agent can do nothing
+# transitionTable[2,6,2] = 1.0
+# when the agent has to move
+transitionTable[2,0,9] = 0.9
+transitionTable[2,1,10] = 0.1
+transitionTable[2,1,10] = 0.9
+transitionTable[2,0,9] = 0.1
 # S3
 transitionTable[3,4,7] = 0.9
 transitionTable[3,4,9] = 0.1
@@ -103,57 +97,98 @@ transitionTable[11,3,5] = 0.1
 transitionTable[11,5,5] = 0.9
 transitionTable[11,5,8] = 0.1
 
-GAMMA = 0.9
+# initializes all rewards as -1
+# rewardsSAS has size SxAxS
+rewardsSAS = np.ones((len(states), len(actions), len(states)))*-1
+rewardsSAS[..., 2] = 100
+rewardsSAS[..., 0] = -10
+rewardsSAS[..., 3] = -10
+rewardsSAS[..., 4] = -10
+rewardsSAS[..., 5] = -10
+
+# r(s,a) = SUM(t(s,a,s')*r(s,a,s'))
+# rewardsSA has size SxA
+rewardsSA = np.sum(transitionTable*rewardsSAS, axis=2)
+# print("RewardsSA[9,2]: should be around 89 ", rewardsSA[9,2])
+
+
 #### VALUE ITERATION
-print("#####     Value Iteration:      #####")
-policy = [0] * len(states)
-print("Initial policy: ", policy)
-V = [0 for s in states]
-change = 1
-loops = 0 # count convergence speed
-# epsilon is 2.220446049250313e-16
-while change > sys.float_info.epsilon:
-    loops += 1
-    change = 0
+def valueIteration():
+    policy = [0] * len(states)
+    value = [0 for s in states]
+    change = 1
+    loops = 0 # count convergence loops
+    # epsilon is 2.220446049250313e-16
+    while change > sys.float_info.epsilon:
+        loops += 1
+        change = 0
+        newV = np.zeros(len(states))
+        for s in states:
+            newValueOfState = max([rewardsSA[s,a] + GAMMA * sum([transitionTable[s, a, sPrime] * value[sPrime] for sPrime in states]) for a in actions])
+            if abs(newValueOfState - value[s]) > change:
+                change = abs(newValueOfState - value[s])
+            newV[s] = newValueOfState
+        value = newV
+
     for s in states:
-        newValueOfState = max([rewards[s,a] + GAMMA * sum([transitionTable[s, a, sPrime] * V[sPrime] for sPrime in states]) for a in actions])
-        if abs(newValueOfState - V[s]) > change:
-            change = abs(newValueOfState - V[s])
-        V[s] = newValueOfState
+        policy[s] = actions[np.argmax([rewardsSA[s, a] + GAMMA * sum([transitionTable[s,a,sPrime]*value[sPrime] for sPrime in states]) for a in actions])]
 
-for s in states:
-    policy[s] = actions[np.argmax([rewards[s, a] + GAMMA * sum([transitionTable[s,a,sPrime]*V[sPrime] for sPrime in states]) for a in actions])]
-print("optimal policy: ", policy)
-print("Utility of different states:")
-for s in states:
-    print(f"{V[s]:.2f} ", end="")
-print()
-print(f"Converged after {loops} loops")
+    return policy, value, loops
 
-print()
+
 #### POLICY ITERATION
-print("#####     Policy Iteration:      #####")
-policy = [0] * len(states)
-print("Initial policy: ", policy)
-utility = [0 for s in states]
-change = True
-loops = 0 # count convergence speed
-while change:
-    loops += 1
-    change = False
-    # calculate utility given policy
-    for s in states:
-        utility[s] = rewards[s, policy[s]] + GAMMA * sum([transitionTable[s, policy[s], sPrime] * utility[sPrime] for sPrime in states])
+def policyIteration():
+    policy = [0] * len(states)
+    utility = [0 for s in states]
+    change = True
+    loops = 0 # count convergence loops
+    while change:
+        loops += 1
+        change = False
+        # calculate utility given policy
+        for s in states:
+            utility[s] = rewardsSA[s, policy[s]] + GAMMA * sum([transitionTable[s, policy[s], sPrime] * utility[sPrime] for sPrime in states])
 
-    for s in states:
-        newAction = np.argmax([rewards[s, a] + GAMMA * sum([transitionTable[s, a, sPrime] * utility[sPrime] for sPrime in states]) for a in actions])
-        if policy[s] != newAction:
-            policy[s] = newAction
-            change = True
+        for s in states:
+            newAction = np.argmax([rewardsSA[s, a] + GAMMA * sum([transitionTable[s, a, sPrime] * utility[sPrime] for sPrime in states]) for a in actions])
+            if policy[s] != newAction:
+                policy[s] = newAction
+                change = True
 
-print("optimal policy: ", policy)
+    return policy, utility, loops
+
+GAMMA = 0.9
+valuePolicy, valueUtility, valueLoops = valueIteration()
+print("#####     Value Iteration:      #####")
+print("optimal policy: ", valuePolicy)
 print("Utility of different states:")
 for s in states:
-    print(f"{utility[s]:.2f} ", end="")
+    print(f"{valueUtility[s]:.2f} ", end="")
 print()
-print(f"Converged after {loops} loops", )
+print(f"Converged after {valueLoops} loops", )
+
+print()
+
+policyPolicy, policyUtility, policyLoops = policyIteration()
+print("#####     Policy Iteration:      #####")
+print("optimal policy: ", policyPolicy)
+print("Utility of different states:")
+for s in states:
+    print(f"{policyUtility[s]:.2f} ", end="")
+print()
+print(f"Converged after {policyLoops} loops", )
+
+print()
+print("Compare convergence speed:")
+n = 100
+startTime = time.time()
+for i in range(n):
+    valueIteration()
+valueTime = time.time() - startTime
+print(f"{n} iterations of valueIteration took {valueTime:.4f}s. On Average: {valueTime/n:.2}")
+
+startTime = time.time()
+for i in range(n):
+    policyIteration()
+policyTime = time.time() - startTime
+print(f"{n} iterations of policyIteration took {policyTime:.4f}s. On Average: {policyTime/n:.2}")
