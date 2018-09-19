@@ -1,27 +1,12 @@
 import numpy as np
-import random
+import sys
 
-GAMMA = 0.9
 states = np.arange(12)
 
-           # 0     1     2    3     4      5    6
-actions = ["a1", "a2", "a3", "b1", "b2", "b3", "c"]
-stateAction = {0:[1, 2],
-               1:[0, 2],
-               2:[6],
-               3:[4, 5],
-               4:[4, 5],
-               5:[3, 4],
-               6:[0, 2, 4, 5],
-               7:[1, 2, 3, 5],
-               8:[0, 1, 4, 5],
-               9:[1, 2, 3, 4],
-               10:[0, 2, 3, 4],
-               11:[0, 1, 3, 5]
-              }
+         # a1 a2 a3 b1 b2 b3 c
+actions = [0, 1, 2, 3, 4, 5, 6]
 
 rewards = np.ones((len(states), len(actions)))*-1
-# rewards = [[-1]*len(states) * len(actions)]
 print(rewards.shape)
 rewards[2,6] = 0
 rewards[9,2] = 100    # goal state
@@ -118,21 +103,27 @@ transitionTable[11,3,5] = 0.1
 transitionTable[11,5,5] = 0.9
 transitionTable[11,5,8] = 0.1
 
+GAMMA = 0.9
 #### VALUE ITERATION
-policy = [stateAction[s][0] for s in states]
+policy = [0] * len(states)
 print("Initial policy: ", policy)
 V = [0 for s in states]
-epsilon = 0.0001
 change = 1
-while change > epsilon:
+loops = 0 # count convergence speed
+# epsilon is 2.220446049250313e-16
+while change > sys.float_info.epsilon:
+    loops += 1
     change = 0
     for s in states:
-        newValueOfState = max([rewards[s,a] + GAMMA * sum([transitionTable[s, a, sPrime] * V[sPrime] for sPrime in states]) for a in stateAction[s]])
+        newValueOfState = max([rewards[s,a] + GAMMA * sum([transitionTable[s, a, sPrime] * V[sPrime] for sPrime in states]) for a in actions])
         if abs(newValueOfState - V[s]) > change:
             change = abs(newValueOfState - V[s])
         V[s] = newValueOfState
 
 for s in states:
-    policy[s] = stateAction[s][np.argmax([rewards[s, a] + GAMMA * sum([transitionTable[s,a,sPrime]*V[sPrime] for sPrime in states]) for a in stateAction[s]])]
+    policy[s] = actions[np.argmax([rewards[s, a] + GAMMA * sum([transitionTable[s,a,sPrime]*V[sPrime] for sPrime in states]) for a in actions])]
 print("optimal policy: ", policy)
-print("V: ", V)
+for s in states:
+    print(f"utility of state {s:2}: {V[s]:.2f}")
+# print(f"V: {V}")
+print(f"Converged after {loops} loops", )
