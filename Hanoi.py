@@ -20,9 +20,6 @@ transitionTable[1,0,11] = 0.1
 transitionTable[1,2,11] = 0.9
 transitionTable[1,2,7] = 0.1
 # S2
-# when the agent can do nothing
-# transitionTable[2,6,2] = 1.0
-# when the agent has to move
 transitionTable[2,0,9] = 0.9
 transitionTable[2,1,10] = 0.1
 transitionTable[2,1,10] = 0.9
@@ -158,9 +155,13 @@ def policyIteration():
     return policy, utility, loops
 
 GAMMA = 0.9
+diskMove = ["a1", "a2", "a3", "b1", "b2", "b3"]
 valuePolicy, valueUtility, valueLoops = valueIteration()
 print("#####     Value Iteration:      #####")
-print("optimal policy: ", valuePolicy)
+print("Optimal policy: ")
+for s in states:
+    print(f"{diskMove[valuePolicy[s]]} ", end="")
+print()
 print("Utility of different states:")
 for s in states:
     print(f"{valueUtility[s]:.2f} ", end="")
@@ -171,7 +172,10 @@ print()
 
 policyPolicy, policyUtility, policyLoops = policyIteration()
 print("#####     Policy Iteration:      #####")
-print("optimal policy: ", policyPolicy)
+print("Optimal policy: ")
+for s in states:
+    print(f"{diskMove[policyPolicy[s]]} ", end="")
+print()
 print("Utility of different states:")
 for s in states:
     print(f"{policyUtility[s]:.2f} ", end="")
@@ -185,10 +189,10 @@ startTime = time.time()
 for i in range(n):
     valueIteration()
 valueTime = time.time() - startTime
-print(f"{n} iterations of valueIteration took {valueTime:.4f}s. On Average: {valueTime/n:.2}")
+print(f"{n} iterations of valueIteration took {valueTime:.4f}s. On Average: {valueTime/n:.2}s")
 
 startTime = time.time()
 for i in range(n):
     policyIteration()
 policyTime = time.time() - startTime
-print(f"{n} iterations of policyIteration took {policyTime:.4f}s. On Average: {policyTime/n:.2}")
+print(f"{n} iterations of policyIteration took {policyTime:.4f}s. On Average: {policyTime/n:.2}s")
