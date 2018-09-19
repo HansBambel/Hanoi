@@ -115,7 +115,7 @@ def valueIteration():
     value = [0 for s in states]
     change = 1
     loops = 0 # count convergence loops
-    # epsilon is 2.220446049250313e-16
+    # sys.float_info.epsilon is 2.220446049250313e-16
     while change > sys.float_info.epsilon:
         loops += 1
         change = 0
@@ -128,7 +128,7 @@ def valueIteration():
         value = newV
 
     for s in states:
-        policy[s] = actions[np.argmax([rewardsSA[s, a] + GAMMA * sum([transitionTable[s,a,sPrime]*value[sPrime] for sPrime in states]) for a in actions])]
+        policy[s] = actions[np.argmax([rewardsSA[s, a] + GAMMA * sum([transitionTable[s,a,sPrime] * value[sPrime] for sPrime in states]) for a in actions])]
 
     return policy, value, loops
 
@@ -156,32 +156,40 @@ def policyIteration():
 
 GAMMA = 0.9
 diskMove = ["a1", "a2", "a3", "b1", "b2", "b3"]
-valuePolicy, valueUtility, valueLoops = valueIteration()
+
+viPolicy, viUtility, viLoops = valueIteration()
 print("#####     Value Iteration:      #####")
 print("Optimal policy: ")
 for s in states:
-    print(f"{diskMove[valuePolicy[s]]} ", end="")
+    print(f"{diskMove[viPolicy[s]]} ", end="")
 print()
 print("Utility of different states:")
 for s in states:
-    print(f"{valueUtility[s]:.2f} ", end="")
+    print(f"{viUtility[s]:.2f} ", end="")
 print()
-print(f"Converged after {valueLoops} loops", )
+print(f"Converged after {viLoops} loops", )
 
 print()
 
-policyPolicy, policyUtility, policyLoops = policyIteration()
+piPolicy, piUtility, piLoops = policyIteration()
 print("#####     Policy Iteration:      #####")
 print("Optimal policy: ")
 for s in states:
-    print(f"{diskMove[policyPolicy[s]]} ", end="")
+    print(f"{diskMove[piPolicy[s]]} ", end="")
 print()
 print("Utility of different states:")
 for s in states:
-    print(f"{policyUtility[s]:.2f} ", end="")
+    print(f"{piUtility[s]:.2f} ", end="")
 print()
-print(f"Converged after {policyLoops} loops", )
+print(f"Converged after {piLoops} loops", )
 
+# For comparison of the calculated utilities I looked at the normalized utilities
+# print("Normalized viUtility: ")
+# print(np.array(viUtility) / np.sqrt((np.sum(np.array(viUtility)**2))))
+# print("Normalized piUtility: ")
+# print(np.array(piUtility) / np.sqrt((np.sum(np.array(piUtility)**2))))
+
+##### COMPARE SPEEDS #####
 print()
 print("Compare convergence speed:")
 n = 100
