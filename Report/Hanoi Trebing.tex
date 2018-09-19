@@ -1,0 +1,73 @@
+\documentclass[a4paper]{article}
+\usepackage{amsmath}
+
+\title{Foundations of Agents: Practical Assignment 1}
+\author{Kevin Trebing (i6192338)}
+
+\begin{document}
+\maketitle
+
+\section{Description of states and actions}
+\subsection{States}
+
+Notation: 
+\begin{itemize}
+
+\item a = small disk, 
+\item b = big disk,  
+\item 1 = pin1, 
+\item 2 = pin2, 
+\item 3 = pin3, 
+\item ab = a is on b
+\end{itemize}
+
+
+\noindent
+We have 12 different possible states: 
+\begin{itemize}
+\item $s_{0}$: ab1 2 3
+\item $s_{1}$: 1 ab2 3
+\item $s_{2}$: 1 2 ab3
+\item $s_{3}$: ba1 2 3
+\item $s_{4}$: 1 ba2 3
+\item $s_{5}$: 1 2 ba3
+\item $s_{6}$: b1 a2 3
+\item $s_{7}$: a1 b2 3
+\item $s_{8}$: b1 2 a3
+\item $s_{9}$: a1 2 b3
+\item $s_{10}$: 1 a2 b3
+\item $s_{11}$: 1 b2 a3
+\end{itemize}
+
+\subsection{States}
+We have 7 different actions:
+\begin{itemize}
+\item $a_{1}$: move a to pin1
+\item $a_{2}$: move a to pin2
+\item $a_{3}$: move a to pin3
+\item $b_{1}$: move b to pin1
+\item $b_{2}$: move b to pin2
+\item $b_{3}$: move b to pin3
+\item $c$ : do nothing
+\end{itemize}
+
+\section{Optimal policy}
+The optimal policy describes for every state the best action the agent should take.
+\begin{itemize}
+\item $\pi(s_{0}) = a_{2}$
+\item $\pi(s_{1}) = a_{1}$
+\item $\pi(s_{2}) = c$
+\item $\pi(s_{3}) = b_{3}$
+\item $\pi(s_{4}) = b_{3}$
+\item $\pi(s_{5}) = b_{2}$ OR $b_{1}?$
+\item $\pi(s_{6}) = b_{3}$
+\item $\pi(s_{7}) = b_{3}$
+\item $\pi(s_{8}) = a_{2}$
+\item $\pi(s_{9}) = a_{3}$
+\item $\pi(s_{10}) = a_{3}$
+\item $\pi(s_{11}) = a_{1}$
+\end{itemize}
+
+\section{Utility}
+The utility
+\end{document}
