@@ -105,6 +105,7 @@ transitionTable[11,5,8] = 0.1
 
 GAMMA = 0.9
 #### VALUE ITERATION
+print("#####     Value Iteration:      #####")
 policy = [0] * len(states)
 print("Initial policy: ", policy)
 V = [0 for s in states]
@@ -123,7 +124,36 @@ while change > sys.float_info.epsilon:
 for s in states:
     policy[s] = actions[np.argmax([rewards[s, a] + GAMMA * sum([transitionTable[s,a,sPrime]*V[sPrime] for sPrime in states]) for a in actions])]
 print("optimal policy: ", policy)
+print("Utility of different states:")
 for s in states:
-    print(f"utility of state {s:2}: {V[s]:.2f}")
-# print(f"V: {V}")
+    print(f"{V[s]:.2f} ", end="")
+print()
+print(f"Converged after {loops} loops")
+
+print()
+#### POLICY ITERATION
+print("#####     Policy Iteration:      #####")
+policy = [0] * len(states)
+print("Initial policy: ", policy)
+utility = [0 for s in states]
+change = True
+loops = 0 # count convergence speed
+while change:
+    loops += 1
+    change = False
+    # calculate utility given policy
+    for s in states:
+        utility[s] = rewards[s, policy[s]] + GAMMA * sum([transitionTable[s, policy[s], sPrime] * utility[sPrime] for sPrime in states])
+
+    for s in states:
+        newAction = np.argmax([rewards[s, a] + GAMMA * sum([transitionTable[s, a, sPrime] * utility[sPrime] for sPrime in states]) for a in actions])
+        if policy[s] != newAction:
+            policy[s] = newAction
+            change = True
+
+print("optimal policy: ", policy)
+print("Utility of different states:")
+for s in states:
+    print(f"{utility[s]:.2f} ", end="")
+print()
 print(f"Converged after {loops} loops", )
