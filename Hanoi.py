@@ -3,7 +3,7 @@ import sys
 import time
 
 states = np.arange(12)
-         # a1 a2 a3 b1 b2 b3
+        #  a1 a2 a3 b1 b2 b3
 actions = [0, 1, 2, 3, 4, 5]
 
 
@@ -20,10 +20,11 @@ transitionTable[1,0,11] = 0.1
 transitionTable[1,2,11] = 0.9
 transitionTable[1,2,7] = 0.1
 # S2
-transitionTable[2,0,9] = 0.9
-transitionTable[2,1,10] = 0.1
-transitionTable[2,1,10] = 0.9
-transitionTable[2,0,9] = 0.1
+# absorbing state
+# transitionTable[2,0,9] = 0.9
+# transitionTable[2,1,10] = 0.1
+# transitionTable[2,1,10] = 0.9
+# transitionTable[2,0,9] = 0.1
 # S3
 transitionTable[3,4,7] = 0.9
 transitionTable[3,4,9] = 0.1
@@ -121,14 +122,14 @@ def valueIteration():
         change = 0
         newV = np.zeros(len(states))
         for s in states:
-            newValueOfState = max([rewardsSA[s,a] + GAMMA * sum([transitionTable[s, a, sPrime] * value[sPrime] for sPrime in states]) for a in actions])
+            newValueOfState = max([rewardsSA[s, a] + GAMMA * sum([transitionTable[s, a, sPrime] * value[sPrime] for sPrime in states]) for a in actions])
             if abs(newValueOfState - value[s]) > change:
                 change = abs(newValueOfState - value[s])
             newV[s] = newValueOfState
         value = newV
 
     for s in states:
-        policy[s] = actions[np.argmax([rewardsSA[s, a] + GAMMA * sum([transitionTable[s,a,sPrime] * value[sPrime] for sPrime in states]) for a in actions])]
+        policy[s] = actions[np.argmax([rewardsSA[s, a] + GAMMA * sum([transitionTable[s, a, sPrime] * value[sPrime] for sPrime in states]) for a in actions])]
 
     return policy, value, loops
 
@@ -153,6 +154,7 @@ def policyIteration():
                 change = True
 
     return policy, utility, loops
+
 
 GAMMA = 0.9
 diskMove = ["a1", "a2", "a3", "b1", "b2", "b3"]
