@@ -26,36 +26,65 @@ Notation:
 \end{multicols}
 
 \noindent
-We have 12 different possible states:
-\begin{multicols}{2}
-\begin{itemize}
-\item $s_{0}$: ab1 2 3
-\item $s_{1}$: 1 ab2 3
-\item $s_{2}$: 1 2 ab3
-\item $s_{3}$: ba1 2 3
-\item $s_{4}$: 1 ba2 3
-\item $s_{5}$: 1 2 ba3
-\item $s_{6}$: b1 a2 3
-\item $s_{7}$: a1 b2 3
-\item $s_{8}$: b1 2 a3
-\item $s_{9}$: a1 2 b3
-\item $s_{10}$: 1 a2 b3
-\item $s_{11}$: 1 b2 a3
-\end{itemize}
-\end{multicols}
+We have 12 different possible states: \\
+%\begin{multicols}{2}
+%\begin{itemize}
+%\item $s_{0}$: ab1 2 3
+%\item $s_{1}$: 1 ab2 3
+%item $s_{2}$: 1 2 ab3
+%item $s_{3}$: ba1 2 3
+%\item $s_{4}$: 1 ba2 3
+%\item $s_{5}$: 1 2 ba3
+%\item $s_{6}$: b1 a2 3
+%\item $s_{7}$: a1 b2 3
+%\item $s_{8}$: b1 2 a3
+%\item $s_{9}$: a1 2 b3
+%\item $s_{10}$: 1 a2 b3
+%\item $s_{11}$: 1 b2 a3
+%\end{itemize}
+%\end{multicols}
+
+\begin{tabular}{ c|c|c|c}
+	State & \multicolumn{3}{c}{Pin} \\
+	\hline
+	$s_{0}$ & ab1 & 2 & 3 \\
+	$s_{1}$ & 1 & ab2 & 3 \\
+	$s_{2}$ & 1 & 2 & ab3 \\
+	$s_{3}$ & ba1 & 2 & 3 \\
+	$s_{4}$ & 1 & ba2 & 3 \\
+	$s_{5}$ & 1 & 2 & ba3 \\
+	$s_{6}$ & b1 & a2 & 3 \\
+	$s_{7}$ & a1 & b2 & 3 \\
+	$s_{8}$ & b1 & 2 & a3 \\
+	$s_{9}$ & a1 & 2 & b3 \\
+	$s_{10}$ & 1 & a2 & b3 \\
+	$s_{11}$ & 1 & b2 & a3
+
+\end{tabular}
 
 \subsection{Description of Actions}
-We have 6 different actions that the agent can take.
-\begin{multicols}{2}
-\begin{itemize}
-\item $a_{1}$: move a to pin1
-\item $a_{2}$: move a to pin2
-\item $a_{3}$: move a to pin3
-\item $b_{1}$: move b to pin1
-\item $b_{2}$: move b to pin2
-\item $b_{3}$: move b to pin3
-\end{itemize}
-\end{multicols}
+We have 6 different actions that the agent can take. \\
+%\begin{multicols}{2}
+%\begin{itemize}
+%\item $a_{1}$: move a to pin1
+%\item $a_{2}$: move a to pin2
+%\item $a_{3}$: move a to pin3
+%\item $b_{1}$: move b to pin1
+%\item $b_{2}$: move b to pin2
+%\item $b_{3}$: move b to pin3
+%\end{itemize}
+%\end{multicols}
+
+\begin{tabular}{c|c}
+Action & effect \\
+\hline
+$a_{1}$ & move a to pin1 \\
+$a_{2}$ & move a to pin2 \\
+$a_{3}$ & move a to pin3 \\
+$b_{1}$ & move b to pin1 \\
+$b_{2}$ & move b to pin2 \\
+$b_{3}$ & move b to pin3
+\end{tabular}
 
 \section{Optimal policy}
 The optimal policy describes for every state the best action the agent should take.
