@@ -95,10 +95,10 @@ The optimal policy describes for every state the best action the agent should ta
 \begin{itemize}
 \item $\pi(s_{0}) = a_{2}$
 \item $\pi(s_{1}) = a_{1}$
-\item $\pi(s_{2}) = a_{2}$
+\item $\pi(s_{2}) = a_{1}$
 \item $\pi(s_{3}) = b_{3}$
 \item $\pi(s_{4}) = b_{3}$
-\item $\pi(s_{5}) = b_{1}$ according to PI and $b_{2}$ according to VI
+\item $\pi(s_{5}) = b_{1}$
 \item $\pi(s_{6}) = b_{3}$
 \item $\pi(s_{7}) = b_{3}$
 \item $\pi(s_{8}) = a_{2}$
@@ -108,8 +108,6 @@ The optimal policy describes for every state the best action the agent should ta
 \end{itemize}
 \end{multicols}
 
-The difference in $\pi(s_5)$ arises because of different utilities of the states. Using action $b_1$ would transition into state $s_8$ and using action $b_2$ would transition into state $s_{11}$. Below we can see that policy iteration gives the state $s_8$ a higher utility than $s_{11}$, vice versa for value iteration.
-
 \section{Utility}
 The utility of each state given the optimal policy. The utility is calculated the following formula:
 \begin{equation}
@@ -117,48 +115,48 @@ u(s,\pi) = r(s,\pi(s)) + \gamma \cdot \sum_{s' \epsilon S} t(s,\pi(s),s') \cdot 
 \end{equation}
 
 \newpage
-Using the utility-values of the policy-iteration:
+Using the utility-values of the value-iteration:
 \begin{multicols}{2}
 \begin{itemize}
-\item $u(s_0) = 73.59 $
-\item $u(s_1) = 62.27 $
-\item $u(s_2) = 0.00 $
-\item $u(s_3) = 86.00 $
-\item $u(s_4) = 86.63 $
-\item $u(s_5) = 53.27 $
-\item $u(s_6) = 85.91 $
-\item $u(s_7) = 85.81 $
-\item $u(s_8) = 74.31 $
-\item $u(s_9) = 98.79 $
-\item $u(s_{10}) = 98.79 $
-\item $u(s_{11}) = 74.11 $
-\end{itemize}
-\end{multicols}
-
-\noindent
-Using value-iteration the following utility-values arise:
-\begin{multicols}{2}
-\begin{itemize}
-\item $u(s_0) = 75.31 $
+\item $u(s_0) = 75.39 $
 \item $u(s_1) = 75.39 $
 \item $u(s_2) = 0.00 $
 \item $u(s_3) = 86.75 $
 \item $u(s_4) = 86.75 $
-\item $u(s_5) = 66.77 $
+\item $u(s_5) = 66.85 $
 \item $u(s_6) = 85.93 $
 \item $u(s_7) = 85.93 $
-\item $u(s_8) = 74.48 $
+\item $u(s_8) = 75.39 $
 \item $u(s_9) = 98.79 $
 \item $u(s_{10}) = 98.79 $
 \item $u(s_{11}) = 75.39 $
 \end{itemize}
 \end{multicols}
 
+\noindent
+Using policy-iteration the following utility-values arise:
+\begin{multicols}{2}
+\begin{itemize}
+\item $u(s_0) = 73.67 $
+\item $u(s_1) = 62.27 $
+\item $u(s_2) = 0.00 $
+\item $u(s_3) = 86.00 $
+\item $u(s_4) = 86.63 $
+\item $u(s_5) = 54.01 $
+\item $u(s_6) = 85.91 $
+\item $u(s_7) = 85.81 $
+\item $u(s_8) = 75.22 $
+\item $u(s_9) = 98.79 $
+\item $u(s_{10}) = 98.79 $
+\item $u(s_{11}) = 74.11 $
+\end{itemize}
+\end{multicols}
+
 \section{Convergence speed}
-Policy-iteration was significantly faster than value-iteration: value-iteration needed about 0.016s to converge whereas policy-iteration only needed 0.0036s to converge. Furthermore, policy-iteration delivers a more accurate result.
+Policy-iteration was significantly faster than value-iteration: value-iteration needed about 0.016s to converge whereas policy-iteration only needed 0.0033s to converge. Furthermore, policy-iteration delivers a more accurate result.
 
 \section{Comparison}
-On the one hand, the policies for value-iteration and policy-iteration differed only in one state ($s_5$). On the other hand, their calculated utilities differed in two states by more than 10\% ($s_1$ and $s_5$).
+Both optimal policies are the same, but their calculated utilities differed in two states by more than 10\% ($s_1$ and $s_5$).
 
 \section{Note}
 The Hanoi.py file requires Python 3.6.

@@ -95,11 +95,12 @@ transitionTable[11,3,5] = 0.1
 transitionTable[11,5,5] = 0.9
 transitionTable[11,5,8] = 0.1
 
-# initializes all rewards as -1
 # rewardsSAS has size SxAxS
+# initialize all rewards as -1
 rewardsSAS = np.ones((len(states), len(actions), len(states)))*-1
+# rewards for ending up in the final state is 100
+# rewards for ending up in states 2, 3, 4 and 5 are -10
 rewardsSAS[..., 2] = 100
-rewardsSAS[..., 0] = -10
 rewardsSAS[..., 3] = -10
 rewardsSAS[..., 4] = -10
 rewardsSAS[..., 5] = -10
