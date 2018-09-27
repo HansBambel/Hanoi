@@ -130,7 +130,7 @@ GAMMA = 0.9
 alpha = 0.9
 qValues = np.zeros((len(states), len(actions)))
 
-for i in range(100):
+for i in range(1000):
     s = np.random.choice(len(states), 1)[0]
     while s != states[2]:
         # choose action and execute it

@@ -20,11 +20,7 @@ transitionTable[1,0,11] = 0.1
 transitionTable[1,2,11] = 0.9
 transitionTable[1,2,7] = 0.1
 # S2
-# absorbing state
-# transitionTable[2,0,9] = 0.9
-# transitionTable[2,1,10] = 0.1
-# transitionTable[2,1,10] = 0.9
-# transitionTable[2,0,9] = 0.1
+# absorbing state --> all probabilities are zero
 # S3
 transitionTable[3,4,7] = 0.9
 transitionTable[3,4,9] = 0.1
@@ -185,12 +181,6 @@ for s in states:
     print(f"{piUtility[s]:.2f} ", end="")
 print()
 print(f"Converged after {piLoops} loops", )
-
-# For comparison of the calculated utilities I looked at the normalized utilities
-# print("Normalized viUtility: ")
-# print(np.array(viUtility) / np.sqrt((np.sum(np.array(viUtility)**2))))
-# print("Normalized piUtility: ")
-# print(np.array(piUtility) / np.sqrt((np.sum(np.array(piUtility)**2))))
 
 ##### COMPARE SPEEDS #####
 print()
