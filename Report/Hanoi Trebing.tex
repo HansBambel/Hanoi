@@ -87,6 +87,7 @@ $b_{2}$ & move b to pin2 \\
 $b_{3}$ & move b to pin3
 \end{tabular}
 
+
 \section{Optimal policy}
 The optimal policy describes for every state the best action the agent should take.
 
@@ -116,7 +117,7 @@ u(s,\pi) = r(s,\pi(s)) + \gamma \cdot \sum_{s' \epsilon S} t(s,\pi(s),s') \cdot 
 \end{equation}
 
 \newpage
-Using the values of the policy-iteration:
+Using the utility-values of the policy-iteration:
 \begin{multicols}{2}
 \begin{itemize}
 \item $u(s_0) = 73.59 $
@@ -153,8 +154,11 @@ Using value-iteration the following utility-values arise:
 \end{itemize}
 \end{multicols}
 
-\section{Conclusion}
-The policies for value-iteration and policy-iteration differed in one state ($s_5$). But apart from that they were similar. Interestingly, the policy-iteration was significantly faster than value-iteration: value-iteration needed about 0.016s to converge whereas policy-iteration only needed 0.0036s to converge. Furthermore, policy-iteration delivers a more accurate result.
+\section{Convergence speed}
+Policy-iteration was significantly faster than value-iteration: value-iteration needed about 0.016s to converge whereas policy-iteration only needed 0.0036s to converge. Furthermore, policy-iteration delivers a more accurate result.
+
+\section{Comparison}
+On the one hand, the policies for value-iteration and policy-iteration differed only in one state ($s_5$). On the other hand, their calculated utilities differed in two states by more than 10\% ($s_1$ and $s_5$).
 
 \section{Note}
 The Hanoi.py file requires Python 3.6.
