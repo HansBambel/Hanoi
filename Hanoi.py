@@ -142,11 +142,10 @@ def policyIteration():
         change = False
         # calculate utility given policy
         rewards = [rewardsSA[s, policy[s]] for s in states]
-        utilityMatrix = np.zeros((len(states), len(states)))
+        utilityMatrix = np.eye(len(states))
         for i, s in enumerate(states):
             for j, sPrime in enumerate(states):
-                utilityMatrix[i, j] = -(GAMMA * transitionTable[s, policy[s], sPrime])
-        utilityMatrix += np.eye(len(states))
+                utilityMatrix[i, j] += -(GAMMA * transitionTable[s, policy[s], sPrime])
         utility = np.linalg.solve(utilityMatrix, rewards)
 
         for s in states:
