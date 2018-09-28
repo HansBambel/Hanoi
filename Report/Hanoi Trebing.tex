@@ -27,22 +27,6 @@ Notation:
 
 \noindent
 We have 12 different possible states: \\
-%\begin{multicols}{2}
-%\begin{itemize}
-%\item $s_{0}$: ab1 2 3
-%\item $s_{1}$: 1 ab2 3
-%item $s_{2}$: 1 2 ab3
-%item $s_{3}$: ba1 2 3
-%\item $s_{4}$: 1 ba2 3
-%\item $s_{5}$: 1 2 ba3
-%\item $s_{6}$: b1 a2 3
-%\item $s_{7}$: a1 b2 3
-%\item $s_{8}$: b1 2 a3
-%\item $s_{9}$: a1 2 b3
-%\item $s_{10}$: 1 a2 b3
-%\item $s_{11}$: 1 b2 a3
-%\end{itemize}
-%\end{multicols}
 
 \begin{tabular}{ c|c|c|c}
 	State & \multicolumn{3}{c}{Pin} \\
@@ -65,16 +49,6 @@ We have 12 different possible states: \\
 \newpage
 \subsection{Description of Actions}
 We have 6 different actions that the agent can take. \\
-%\begin{multicols}{2}
-%\begin{itemize}
-%\item $a_{1}$: move a to pin1
-%\item $a_{2}$: move a to pin2
-%\item $a_{3}$: move a to pin3
-%\item $b_{1}$: move b to pin1
-%\item $b_{2}$: move b to pin2
-%\item $b_{3}$: move b to pin3
-%\end{itemize}
-%\end{multicols}
 
 \begin{tabular}{c|c}
 Action & effect \\
@@ -114,8 +88,8 @@ The utility of each state given the optimal policy. The utility is calculated th
 u(s,\pi) = r(s,\pi(s)) + \gamma \cdot \sum_{s' \epsilon S} t(s,\pi(s),s') \cdot u(s',\pi)
 \end{equation}
 
-\newpage
-Using the utility-values of the value-iteration:
+
+The utility-values of value-iteration and policy-iteration:
 \begin{multicols}{2}
 \begin{itemize}
 \item $u(s_0) = 75.39 $
@@ -133,30 +107,12 @@ Using the utility-values of the value-iteration:
 \end{itemize}
 \end{multicols}
 
-\noindent
-Using policy-iteration the following utility-values arise:
-\begin{multicols}{2}
-\begin{itemize}
-\item $u(s_0) = 73.67 $
-\item $u(s_1) = 62.27 $
-\item $u(s_2) = 0.00 $
-\item $u(s_3) = 86.00 $
-\item $u(s_4) = 86.63 $
-\item $u(s_5) = 54.01 $
-\item $u(s_6) = 85.91 $
-\item $u(s_7) = 85.81 $
-\item $u(s_8) = 75.22 $
-\item $u(s_9) = 98.79 $
-\item $u(s_{10}) = 98.79 $
-\item $u(s_{11}) = 74.11 $
-\end{itemize}
-\end{multicols}
 
 \section{Convergence speed}
-Policy-iteration was significantly faster than value-iteration: value-iteration needed about 0.016s to converge whereas policy-iteration only needed 0.0033s to converge. Furthermore, policy-iteration delivers a more accurate result.
+Policy-iteration was significantly faster than value-iteration: value-iteration needed about 0.016s to converge whereas policy-iteration only needed 0.0043s to converge.
 
 \section{Comparison}
-Both optimal policies are the same, but their calculated utilities differed in two states by more than 10\% ($s_1$ and $s_5$).
+Both optimal policies are the same as well as their utility-values.
 
 \section{Note}
 The Hanoi.py file requires Python 3.6.
