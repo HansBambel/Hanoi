@@ -123,28 +123,35 @@ def getNewStateReward(oldState, action):
     reward = rewardsSAS[oldState, action, newState]
 
     return newState, reward
+
+def getAlpha(state, action):
+    visits[state, action] += 1
+    return 1.0/visits[state, action]
+    
 #### Q-Learning ####
 diskMove = ["a1", "a2", "a3", "b1", "b2", "b3"]
 GAMMA = 0.9
 # learning rate
-alpha = 0.9
+visits = np.zeros((len(states), len(actions)))
 qValues = np.zeros((len(states), len(actions)))
 
-for i in range(1000):
+for i in range(4000):
     s = np.random.choice(len(states), 1)[0]
     while s != states[2]:
         # choose action and execute it
         a = np.argmax(qValues[s])
         # identify new state and observe reward
         sPrime, r = getNewStateReward(s, a)
-
         # assign new q-Values
-        qValues[s, a] = qValues[s, a] + alpha*(r+ GAMMA* np.max([qValues[sPrime, aPrime] for aPrime in actions]) - qValues[s, a])
-        # TODO update lambda
+        qValues[s, a] = qValues[s, a] + getAlpha(s, a)*(r+ GAMMA* np.max([qValues[sPrime, aPrime] for aPrime in actions]) - qValues[s, a])
+        # update alpha
 
         s = sPrime
 
 for i, q in enumerate(qValues):
     print(f"pi(state{i}) = {diskMove[np.argmax(q)]} with q-Value: {np.max(q):.2f}")
+print(np.max(qValues, axis=1))
+# [73.42236461 60.10292676  0.         84.97138285 86.65556643 50.80545637
+#  85.88999301 69.19490563 63.96330884 98.65136193 98.84062416 60.52354838]
 # print(qValues)
 # getNewStateReward(states[0], actions[1])

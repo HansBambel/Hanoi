@@ -1,0 +1,113 @@
+\documentclass[a4paper]{article}
+\usepackage{amsmath}
+\usepackage{multicol}
+
+\title{Foundations of Agents: Practical Assignment 1}
+\author{Kevin Trebing (i6192338)}
+
+\begin{document}
+\maketitle
+
+\section{Tower of Hanoi problem}
+In a Tower of Hanoi problem the agent needs to move disks of different sizes from one pin to another pin. Furthermore, the disks need to be in the order that a smaller disk needs to be on top of a bigger one. Only one disk can be moved at a time and only the topmost disk can be moved. In our problem we have 3 pins and two disks. The starting position is pin 1 and the smaller disk is on the bigger disk. The goal is to move the disks to pin 3.
+
+\subsection{Description of States}
+Notation:
+\begin{multicols}{2}
+\begin{itemize}
+
+\item a = small disk,
+\item b = big disk,
+\item 1 = pin1,
+\item 2 = pin2,
+\item 3 = pin3,
+\item ab = a is on b
+\end{itemize}
+\end{multicols}
+
+\noindent
+We have 12 different possible states: \\
+
+\begin{tabular}{ c|c|c|c}
+	State & \multicolumn{3}{c}{Pin} \\
+	\hline
+	$s_{0}$ & ab1 & 2 & 3 \\
+	$s_{1}$ & 1 & ab2 & 3 \\
+	$s_{2}$ & 1 & 2 & ab3 \\
+	$s_{3}$ & ba1 & 2 & 3 \\
+	$s_{4}$ & 1 & ba2 & 3 \\
+	$s_{5}$ & 1 & 2 & ba3 \\
+	$s_{6}$ & b1 & a2 & 3 \\
+	$s_{7}$ & a1 & b2 & 3 \\
+	$s_{8}$ & b1 & 2 & a3 \\
+	$s_{9}$ & a1 & 2 & b3 \\
+	$s_{10}$ & 1 & a2 & b3 \\
+	$s_{11}$ & 1 & b2 & a3
+
+\end{tabular}
+
+\newpage
+\subsection{Description of Actions}
+We have 6 different actions that the agent can take. \\
+
+\begin{tabular}{c|c}
+Action & effect \\
+\hline
+$a_{1}$ & move a to pin1 \\
+$a_{2}$ & move a to pin2 \\
+$a_{3}$ & move a to pin3 \\
+$b_{1}$ & move b to pin1 \\
+$b_{2}$ & move b to pin2 \\
+$b_{3}$ & move b to pin3
+\end{tabular}
+
+
+\section{Optimal policy}
+The optimal policy describes for every state the best action the agent should take.
+
+\begin{multicols}{2}
+\begin{itemize}
+\item $\pi(s_{0}) = a_{2}$
+\item $\pi(s_{1}) = a_{1}$
+\item $\pi(s_{2}) = a_{1}$
+\item $\pi(s_{3}) = b_{3}$
+\item $\pi(s_{4}) = b_{3}$
+\item $\pi(s_{5}) = b_{1}$
+\item $\pi(s_{6}) = b_{3}$
+\item $\pi(s_{7}) = b_{1}$
+\item $\pi(s_{8}) = a_{1}$
+\item $\pi(s_{9}) = a_{3}$
+\item $\pi(s_{10}) = a_{3}$
+\item $\pi(s_{11}) = a_{1}$
+\end{itemize}
+\end{multicols}
+
+\section{Q-values}
+
+The q-values of value-iteration and policy-iteration:
+\begin{multicols}{2}
+\begin{itemize}
+\item $u(s_0) = 75.42 $
+\item $u(s_1) = 60.10 $
+\item $u(s_2) = 0.00 $
+\item $u(s_3) = 84.97 $
+\item $u(s_4) = 86.66 $
+\item $u(s_5) = 50.81 $
+\item $u(s_6) = 85.89 $
+\item $u(s_7) = 69.19 $
+\item $u(s_8) = 63.96 $
+\item $u(s_9) = 98.65 $
+\item $u(s_{10}) = 98.84 $
+\item $u(s_{11}) = 60.52 $
+\end{itemize}
+\end{multicols}
+
+\section{Difference to value and policy iteration}
+
+\section{Convergence speed}
+TODO
+
+\section{Note}
+The Hanoi.py file requires Python 3.6.
+
+\end{document}
