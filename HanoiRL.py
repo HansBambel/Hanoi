@@ -21,10 +21,6 @@ transitionTable[1,2,11] = 0.9
 transitionTable[1,2,7] = 0.1
 # S2
 # absorbing state
-# transitionTable[2,0,9] = 0.9
-# transitionTable[2,1,10] = 0.1
-# transitionTable[2,1,10] = 0.9
-# transitionTable[2,0,9] = 0.1
 # S3
 transitionTable[3,4,7] = 0.9
 transitionTable[3,4,9] = 0.1
@@ -127,7 +123,7 @@ def getNewStateReward(oldState, action):
 def getAlpha(state, action):
     visits[state, action] += 1
     return 1.0/visits[state, action]
-    
+
 #### Q-Learning ####
 diskMove = ["a1", "a2", "a3", "b1", "b2", "b3"]
 GAMMA = 0.9
@@ -135,7 +131,7 @@ GAMMA = 0.9
 visits = np.zeros((len(states), len(actions)))
 qValues = np.zeros((len(states), len(actions)))
 
-for i in range(4000):
+for i in range(10000):
     s = np.random.choice(len(states), 1)[0]
     while s != states[2]:
         # choose action and execute it

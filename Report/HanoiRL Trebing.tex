@@ -72,10 +72,10 @@ The optimal policy describes for every state the best action the agent should ta
 \item $\pi(s_{2}) = a_{1}$
 \item $\pi(s_{3}) = b_{3}$
 \item $\pi(s_{4}) = b_{3}$
-\item $\pi(s_{5}) = b_{1}$
+\item $\pi(s_{5}) = b_{2}$
 \item $\pi(s_{6}) = b_{3}$
-\item $\pi(s_{7}) = b_{1}$
-\item $\pi(s_{8}) = a_{1}$
+\item $\pi(s_{7}) = b_{3}$
+\item $\pi(s_{8}) = a_{2}$
 \item $\pi(s_{9}) = a_{3}$
 \item $\pi(s_{10}) = a_{3}$
 \item $\pi(s_{11}) = a_{1}$
@@ -84,25 +84,26 @@ The optimal policy describes for every state the best action the agent should ta
 
 \section{Q-values}
 
-The q-values of value-iteration and policy-iteration:
+The q-values of of the states given the optimal policy:
 \begin{multicols}{2}
 \begin{itemize}
-\item $u(s_0) = 75.42 $
-\item $u(s_1) = 60.10 $
+\item $u(s_0) = 75.55 $
+\item $u(s_1) = 75.30 $
 \item $u(s_2) = 0.00 $
-\item $u(s_3) = 84.97 $
-\item $u(s_4) = 86.66 $
-\item $u(s_5) = 50.81 $
-\item $u(s_6) = 85.89 $
-\item $u(s_7) = 69.19 $
-\item $u(s_8) = 63.96 $
-\item $u(s_9) = 98.65 $
-\item $u(s_{10}) = 98.84 $
-\item $u(s_{11}) = 60.52 $
+\item $u(s_3) = 86.82 $
+\item $u(s_4) = 86.92 $
+\item $u(s_5) = 65.73 $
+\item $u(s_6) = 85.95 $
+\item $u(s_7) = 86.03 $
+\item $u(s_8) = 74.16 $
+\item $u(s_9) = 98.82 $
+\item $u(s_{10}) = 98.82 $
+\item $u(s_{11}) = 75.29 $
 \end{itemize}
 \end{multicols}
 
 \section{Difference to value and policy iteration}
+The major difference is that the results could differ a lot due to randomness. The q-values sometimes are very similar to the utility values calculated from the previous assignment.
 
 \section{Convergence speed}
 TODO
