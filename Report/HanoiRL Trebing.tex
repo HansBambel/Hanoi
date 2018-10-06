@@ -61,6 +61,8 @@ $b_{2}$ & move b to pin2 \\
 $b_{3}$ & move b to pin3
 \end{tabular}
 
+\section{How the agent learns the optimal result for every initial state}
+Given an infinite amount of runs every state will also be visited infinitely many times and thus the optimal policy will also be optimal. 
 
 \section{Optimal policy}
 The optimal policy describes for every state the best action the agent should take.
@@ -71,8 +73,8 @@ The optimal policy describes for every state the best action the agent should ta
 \item $\pi(s_{1}) = a_{1}$
 \item $\pi(s_{2}) = a_{1}$
 \item $\pi(s_{3}) = b_{3}$
-\item $\pi(s_{4}) = b_{3}$
-\item $\pi(s_{5}) = b_{2}$
+\item $\pi(s_{4}) = b_{1}$
+\item $\pi(s_{5}) = b_{1}$
 \item $\pi(s_{6}) = b_{3}$
 \item $\pi(s_{7}) = b_{3}$
 \item $\pi(s_{8}) = a_{2}$
@@ -87,18 +89,18 @@ The optimal policy describes for every state the best action the agent should ta
 The q-values of of the states given the optimal policy:
 \begin{multicols}{2}
 \begin{itemize}
-\item $u(s_0) = 75.55 $
-\item $u(s_1) = 75.30 $
+\item $u(s_0) = 73.81 $
+\item $u(s_1) = 72.15 $
 \item $u(s_2) = 0.00 $
-\item $u(s_3) = 86.82 $
-\item $u(s_4) = 86.92 $
-\item $u(s_5) = 65.73 $
-\item $u(s_6) = 85.95 $
-\item $u(s_7) = 86.03 $
-\item $u(s_8) = 74.16 $
-\item $u(s_9) = 98.82 $
-\item $u(s_{10}) = 98.82 $
-\item $u(s_{11}) = 75.29 $
+\item $u(s_3) = 86.72 $
+\item $u(s_4) = 76.17 $
+\item $u(s_5) = 62.67 $
+\item $u(s_6) = 84.82 $
+\item $u(s_7) = 85.83 $
+\item $u(s_8) = 73.65 $
+\item $u(s_9) = 98.84 $
+\item $u(s_{10}) = 98.77 $
+\item $u(s_{11}) = 61.55 $
 \end{itemize}
 \end{multicols}
 

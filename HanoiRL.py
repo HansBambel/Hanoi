@@ -2,6 +2,7 @@ import numpy as np
 import sys
 import time
 import random
+import tqdm
 
 states = np.arange(12)
         #  a1 a2 a3 b1 b2 b3
@@ -104,18 +105,16 @@ rewardsSAS[..., 5] = -10
 # r(s,a) = SUM(t(s,a,s')*r(s,a,s'))
 # rewardsSA has size SxA
 rewardsSA = np.sum(transitionTable*rewardsSAS, axis=2)
-# print("RewardsSA[9,2]: should be around 89 ", rewardsSA[9,2])
 
 def getNewStateReward(oldState, action):
-
     newPosStates = transitionTable[oldState, action]
     # print(newPosStates)
     # if action is not allowed:
     if np.sum(newPosStates) == 0.0:
-        return s, -1
+        return oldState, -1
 
     # draw one sample from the possible states with the given possibilites
-    newState = np.random.choice(len(newPosStates), 1, p=newPosStates)[0]
+    newState = np.random.choice(len(newPosStates), p=newPosStates)
     reward = rewardsSAS[oldState, action, newState]
 
     return newState, reward
@@ -131,22 +130,34 @@ GAMMA = 0.9
 visits = np.zeros((len(states), len(actions)))
 qValues = np.zeros((len(states), len(actions)))
 
-for i in range(10000):
-    s = np.random.choice(len(states), 1)[0]
+for i in tqdm.tqdm(range(10000)):
+    # "After reaching the absorbing state, continue the learning process in a randomly selected other state."
+    s = np.random.choice(len(states))
+    # state s2 is the absorbing state
     while s != states[2]:
         # choose action and execute it
-        a = np.argmax(qValues[s])
+        # interleave exploration and exploitation using softmax
+        softmax = np.exp(qValues[s])/np.sum(np.exp(qValues[s]))
+        a = np.random.choice(len(qValues[s]), p=softmax)
         # identify new state and observe reward
         sPrime, r = getNewStateReward(s, a)
         # assign new q-Values
-        qValues[s, a] = qValues[s, a] + getAlpha(s, a)*(r+ GAMMA* np.max([qValues[sPrime, aPrime] for aPrime in actions]) - qValues[s, a])
-        # update alpha
-
+        qValues[s, a] = qValues[s, a] + getAlpha(s, a)*(r + GAMMA* np.max(qValues[sPrime]) - qValues[s, a])
+        # update alpha (gets updated in the get function)
         s = sPrime
 
 for i, q in enumerate(qValues):
     print(f"pi(state{i}) = {diskMove[np.argmax(q)]} with q-Value: {np.max(q):.2f}")
 print(np.max(qValues, axis=1))
+# for i in range(len(states)):
+#     print(np.max([qValues[states[i], aPrime] for aPrime in actions]))
+#     print(np.max(qValues[states[i]]))
+# for i, v in enumerate(visits):
+#     print(i)
+#     print(v)
+#     print(qValues[i])
+# print(f'Visits: {visits}')
+# print(f'qValues: {qValues}')
 # [73.42236461 60.10292676  0.         84.97138285 86.65556643 50.80545637
 #  85.88999301 69.19490563 63.96330884 98.65136193 98.84062416 60.52354838]
 # print(qValues)
