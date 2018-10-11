@@ -2,7 +2,7 @@ import numpy as np
 import sys
 import time
 import random
-import tqdm
+# import tqdm
 
 states = np.arange(12)
         #  a1 a2 a3 b1 b2 b3
@@ -120,8 +120,9 @@ def getNewStateReward(oldState, action):
     return newState, reward
 
 def getAlpha(state, action):
-    visits[state, action] += 1
-    return 1.0/visits[state, action]
+    # visits[state, action] += 1
+    # return 1.0/visits[state, action]
+    return 0.01
 
 #### Q-Learning ####
 diskMove = ["a1", "a2", "a3", "b1", "b2", "b3"]
@@ -130,7 +131,8 @@ GAMMA = 0.9
 visits = np.zeros((len(states), len(actions)))
 qValues = np.zeros((len(states), len(actions)))
 
-for i in tqdm.tqdm(range(10000)):
+startTime = time.time()
+for i in range(10000):
     # "After reaching the absorbing state, continue the learning process in a randomly selected other state."
     s = np.random.choice(len(states))
     # state s2 is the absorbing state
@@ -145,20 +147,8 @@ for i in tqdm.tqdm(range(10000)):
         qValues[s, a] = qValues[s, a] + getAlpha(s, a)*(r + GAMMA* np.max(qValues[sPrime]) - qValues[s, a])
         # update alpha (gets updated in the get function)
         s = sPrime
-
+endTime = time.time()
+print(f'{endTime-startTime:.2f}s time elapsed')
 for i, q in enumerate(qValues):
     print(f"pi(state{i}) = {diskMove[np.argmax(q)]} with q-Value: {np.max(q):.2f}")
 print(np.max(qValues, axis=1))
-# for i in range(len(states)):
-#     print(np.max([qValues[states[i], aPrime] for aPrime in actions]))
-#     print(np.max(qValues[states[i]]))
-# for i, v in enumerate(visits):
-#     print(i)
-#     print(v)
-#     print(qValues[i])
-# print(f'Visits: {visits}')
-# print(f'qValues: {qValues}')
-# [73.42236461 60.10292676  0.         84.97138285 86.65556643 50.80545637
-#  85.88999301 69.19490563 63.96330884 98.65136193 98.84062416 60.52354838]
-# print(qValues)
-# getNewStateReward(states[0], actions[1])

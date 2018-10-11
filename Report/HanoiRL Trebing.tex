@@ -62,7 +62,7 @@ $b_{3}$ & move b to pin3
 \end{tabular}
 
 \section{How the agent learns the optimal result for every initial state}
-Given an infinite amount of runs every state will also be visited infinitely many times and thus the optimal policy will also be optimal. 
+Every time the agent ends in the absorbing state the new state is randomly chosen. Given enough resets the agent will start in every state enough times to approximate the optimal result.
 
 \section{Optimal policy}
 The optimal policy describes for every state the best action the agent should take.
@@ -73,7 +73,7 @@ The optimal policy describes for every state the best action the agent should ta
 \item $\pi(s_{1}) = a_{1}$
 \item $\pi(s_{2}) = a_{1}$
 \item $\pi(s_{3}) = b_{3}$
-\item $\pi(s_{4}) = b_{1}$
+\item $\pi(s_{4}) = b_{3}$
 \item $\pi(s_{5}) = b_{1}$
 \item $\pi(s_{6}) = b_{3}$
 \item $\pi(s_{7}) = b_{3}$
@@ -89,26 +89,28 @@ The optimal policy describes for every state the best action the agent should ta
 The q-values of of the states given the optimal policy:
 \begin{multicols}{2}
 \begin{itemize}
-\item $u(s_0) = 73.81 $
-\item $u(s_1) = 72.15 $
+\item $u(s_0) = 75.30 $
+\item $u(s_1) = 75.26 $
 \item $u(s_2) = 0.00 $
-\item $u(s_3) = 86.72 $
-\item $u(s_4) = 76.17 $
-\item $u(s_5) = 62.67 $
-\item $u(s_6) = 84.82 $
-\item $u(s_7) = 85.83 $
-\item $u(s_8) = 73.65 $
-\item $u(s_9) = 98.84 $
-\item $u(s_{10}) = 98.77 $
-\item $u(s_{11}) = 61.55 $
+\item $u(s_3) = 87.11 $
+\item $u(s_4) = 86.98 $
+\item $u(s_5) = 66.62 $
+\item $u(s_6) = 85.63 $
+\item $u(s_7) = 85.99 $
+\item $u(s_8) = 74.99 $
+\item $u(s_9) = 98.54 $
+\item $u(s_{10}) = 98.83 $
+\item $u(s_{11}) = 74.96 $
 \end{itemize}
 \end{multicols}
 
 \section{Difference to value and policy iteration}
-The major difference is that the results could differ a lot due to randomness. The q-values sometimes are very similar to the utility values calculated from the previous assignment.
+Convergence depended on the learning rate a lot. At first I used $\frac{1}{numVisits}$, but this resulted in bad results. The reason for this is that the initial probability of choosing an action is the same for every action, but as soon as the first q-value for that state is updated with an initial learning rate of 1 the probability to choose this action is way higher than the other actions. 
+
+When fixing the learning rate at $0.01$ the probability of choosing an action does not change very much, this is what we want in the beginning of learning to encourage exploration. A small learning rate stabilizes learning.
 
 \section{Convergence speed}
-TODO
+Since I have a fixed learning rate of $0.01$ it needs a lot of loops to converge to optimal values (optimal values are the values that were calculated by policy iteration in the earlier assignment). Using 10000 iterations I get very similar q-values compared to the optimal utility values. 
 
 \section{Note}
 The Hanoi.py file requires Python 3.6.
