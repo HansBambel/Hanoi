@@ -89,18 +89,18 @@ The optimal policy describes for every state the best action the agent should ta
 The q-values of of the states given the optimal policy:
 \begin{multicols}{2}
 \begin{itemize}
-\item $u(s_0) = 75.30 $
-\item $u(s_1) = 75.26 $
-\item $u(s_2) = 0.00 $
-\item $u(s_3) = 87.11 $
-\item $u(s_4) = 86.98 $
-\item $u(s_5) = 66.62 $
-\item $u(s_6) = 85.63 $
-\item $u(s_7) = 85.99 $
-\item $u(s_8) = 74.99 $
-\item $u(s_9) = 98.54 $
-\item $u(s_{10}) = 98.83 $
-\item $u(s_{11}) = 74.96 $
+\item $q(s_0) = 75.30 $
+\item $q(s_1) = 75.26 $
+\item $q(s_2) = 0.00 $
+\item $q(s_3) = 87.11 $
+\item $q(s_4) = 86.98 $
+\item $q(s_5) = 66.62 $
+\item $q(s_6) = 85.63 $
+\item $q(s_7) = 85.99 $
+\item $q(s_8) = 74.99 $
+\item $q(s_9) = 98.54 $
+\item $q(s_{10}) = 98.83 $
+\item $q(s_{11}) = 74.96 $
 \end{itemize}
 \end{multicols}
 
@@ -109,8 +109,10 @@ Convergence depended on the learning rate a lot. At first I used $\frac{1}{numVi
 
 When fixing the learning rate at $0.01$ the probability of choosing an action does not change very much, this is what we want in the beginning of learning to encourage exploration. A small learning rate stabilizes learning.
 
+The q-values are about the same as the utility values calculated in the previous assignment.
+
 \section{Convergence speed}
-Since I have a fixed learning rate of $0.01$ it needs a lot of loops to converge to optimal values (optimal values are the values that were calculated by policy iteration in the earlier assignment). Using 10000 iterations I get very similar q-values compared to the optimal utility values. The time for 10000 iterations are about 2.5s.
+Since I have a fixed learning rate of $0.01$ it needs a lot of loops to converge to optimal values (optimal values are the values that were calculated by policy iteration in the earlier assignment). Using 10000 iterations I get very similar q-values compared to the optimal utility values. The time needed for 10000 iterations is about 2.5s.
 
 \section{Note}
 The Hanoi.py file requires Python 3.6.
