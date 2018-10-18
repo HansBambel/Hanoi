@@ -1,0 +1,74 @@
+\documentclass[a4paper]{article}
+\usepackage{amsmath}
+\usepackage{multicol}
+\usepackage{graphicx}
+
+\title{Foundations of Agents: Practical Assignment 1}
+\author{Kevin Trebing (i6192338)}
+
+\begin{document}
+\maketitle
+
+\section{Formalization}
+\subsection{Description of States}
+Notation:
+\begin{multicols}{2}
+\begin{itemize}
+
+\item a = small disk,
+\item b = big disk,
+\item 1 = pin1,
+\item 2 = pin2,
+\item 3 = pin3,
+\item ab = a is on b
+\end{itemize}
+\end{multicols}
+
+\noindent
+We have 9 different possible states: \\
+
+\begin{tabular}{ c|c|c|c}
+	State & \multicolumn{3}{c}{Pin} \\
+	\hline
+	$s_{0}$ & ab1 & 2 & 3 \\
+	$s_{1}$ & b1 & a2 & 3 \\
+	$s_{2}$ & 1 & a2 & b3 \\
+	$s_{3}$ & 1 & 2 & ab3 \\
+	$s_{4}$ & b1 & 2 & a3 \\
+	$s_{5}$ & 1 & b2 & a3 \\
+	$s_{6}$ & 1 & ab2 & 3 \\
+	$s_{7}$ & a1 & b2 & 3 \\
+	$s_{8}$ & a1 & 2 & b3 
+\end{tabular}
+
+%\newpage
+\subsection{Description of Actions}
+We have 6 different actions that the agent can take. \\
+
+\begin{tabular}{c|c}
+Action & effect \\
+\hline
+$a_{1}$ & move a to pin1 \\
+$a_{2}$ & move a to pin2 \\
+$a_{3}$ & move a to pin3 \\
+$b_{1}$ & move b to pin1 \\
+$b_{2}$ & move b to pin2 \\
+$b_{3}$ & move b to pin3
+\end{tabular}
+
+\newpage
+\subsection{Behaviour}
+One possible behaviour for moving disks from Pin1 to Pin3 is the following:
+
+do(move-disks-from-pin1-to-pin3) is a composite action and therefore can be split into the following actions:
+
+do(move-DiskA-to-Pin2; move-DiskB-to-Pin3; move-DiskA-to-Pin3)
+
+\noindent
+There are also other possible actions that would achieve do(move-disks-from-pin1-to-pin3), but I chose the shortest one possible.
+
+
+\section{Kripke Structure}
+\includegraphics[scale=0.45]{"Hanoi Dynamic Logic"}
+
+\end{document}
